@@ -1,0 +1,118 @@
+##########################  FI 4090 #####################################################################
+#########################  Financial Data Analytics ######################################################
+######################## Created by: Rasha Ashraf  #######################################################
+
+############################ Lecture 3  ###################################################################
+
+
+################ Source: An Introduction to Analysis of Financial Data with R, by Ruey S. Tsay ###########
+#### Chapter 1 ###########################################################################################
+
+
+
+################Install quantmod package ################################
+install.packages("quantmod")
+
+
+#################### Load the package ################################
+library(quantmod)  
+
+
+
+############################   PART 2 ######################################################################################
+
+###############################################################################################################################
+############# A.  Compute Log Returns #########################################################################################
+###############################################################################################################################
+
+getSymbols("AAPL",from="2007-01-03",to="2011-12-02") #Specify period
+head(AAPL)
+
+head(AAPL$AAPL.Adjusted)
+
+# To access a varible in the data object use $ (see below)
+AAPL.rtn=diff(log(AAPL$AAPL.Adjusted)) # Compute log returns: difference in log prices
+
+head(AAPL.rtn)
+dim(AAPL.rtn)
+
+### delete the obs with missing values NA
+AAPL.rtn=na.omit(AAPL.rtn)
+head(AAPL.rtn)
+dim(AAPL.rtn)
+
+#Figure 3
+chartSeries(AAPL.rtn,theme="white") #Time plot of daily log returns of Apple Stock 2007 to 2011
+
+
+
+############################################################################################################
+############# B.  Compute daily changes in YTM for 10 year T notes #########################################
+############################################################################################################
+
+getSymbols("^TNX",from="2007-01-03",to="2011-12-02")
+
+head(TNX)
+
+TNX.rtn=diff(TNX$TNX.Adjusted) # Compute changes
+#Figure 4
+chartSeries(TNX.rtn,theme="white") #Time plot of daily changes in YTM for the US 10 year T Notes 
+
+
+#############################################################################################################
+##### C. Daily log return of the Dollar-Euro exchange rate ##################################################
+#############################################################################################################
+
+getSymbols("DEXUSEU",src="FRED") #Obtain exchange rates from FRED
+head(DEXUSEU)
+tail(DEXUSEU)
+
+# To access a varible in the data object use $ (see below)
+USEU.rtn=diff(log(DEXUSEU$DEXUSEU))
+
+#Figure 5: Time plot of daily dollar-euro exchange rate from Jan 04,1999 to Aug, 2016 
+chartSeries(DEXUSEU,theme="white") 
+
+#Figure 6: Time plot of daily log returns of the  dollar-euro exchange rates from Jan 04,1999 to Aug, 2016 
+chartSeries(USEU.rtn,theme="white")
+
+
+
+
+
+############ CLASS ASSIGNMENT 2 #############################################################################################
+
+##### Compute daily log return of the Amazon stock  for the period January 2010 till December 2016 ##########################
+#### Plot daily return of Amazon stock for the sample period
+#### Display the first 6 rows of the Amazon stock return for the sample period. Decide what you should do with the first observation.  
+ 
+
+
+#### SEE THE SOLUTION BELOW FOR ASSIGNMENT 2 #######################################################################
+
+getSymbols("AMZN",from="2010-01-02", to="2016-12-31") # Download daily prices of Amazon stock from Yahoo
+
+
+## Compute log return of the Amazon stock 
+AMZN.rtn=diff(log(AMZN$AMZN.Adjusted)) # Compute log returns: difference in log prices
+
+
+# Plot daily return of Amazon stock
+chartSeries(AMZN.rtn,theme="white") 
+
+
+### Display the first six rows of the Amazon return 
+head(AMZN.rtn)
+dim(AMZN.rtn)
+
+### Decide what you should do with the first observation:  delete the first obs with missing values NA 
+AMZN.rtn=na.omit(AMZN.rtn)
+head(AMZN.rtn)
+dim(AMZN.rtn)
+
+
+#############################################################################################################################
+
+
+
+
