@@ -1,0 +1,65 @@
+# Install the necessary packages
+install.packages("quantmod")
+install.packages("fBasics")
+
+# Load the packages
+library(quantmod)
+library(fBasics)
+
+# Part 1(A): Get daily prices data of Microsoft stock from Yahoo for the period January 2, 2001, till December 31, 2016
+getSymbols("MSFT", from = "2001-01-02", to = "2016-12-31")
+
+# Part 1(B): Get the size of the downloaded data
+dim(MSFT)
+
+# Part 1(C): Observe the first 6 rows of the data
+head(MSFT)
+
+# Part 1(D): Plot of the daily prices and volume
+chartSeries(MSFT, theme = "white")
+
+# Part 1(E): Compute log returns
+# Extracting adjusted closing price
+head(MSFT$MSFT.Adjusted)
+
+# Calculate the log returns
+MSFT.rtn <- diff(log(MSFT$MSFT.Adjusted))
+
+# Get the log return for the first 6 rows of data
+head(MSFT.rtn)
+
+# Provide the dimension of the MSFT returns
+dim(MSFT.rtn)
+
+# Remove the null data
+MSFT.rtn <- na.omit(MSFT.rtn)
+
+# Recall data of the first 6 rows with the null observation being removed
+head(MSFT.rtn)
+
+# Updated data size now that the null observation has been deleted
+dim(MSFT.rtn)
+
+# Part 1(F): Time plot of daily log returns of Microsoft stock for the sample data
+chartSeries(MSFT.rtn, theme = "white")
+
+# Part 1(G): Summary of statistics
+# Load the package
+library(fBasics)
+
+# Summary of statistics for the returns
+basicStats(MSFT.rtn)
+
+# Mean of the MSFT sample stock return
+mean(MSFT.rtn)
+
+# Standard deviation of the MSFT sample stock return
+stdev(MSFT.rtn)
+
+# Part 1(H): Analysis and interpretation
+# To begin with, the pricing and volume demonstrated in the diagram suggest that Microsoft stocks fluctuated and remained consistent after 2012 as it continued to increase. 
+# For example, in the beginning of 2001 there was a slight increase in the price of stocks then it decreased in 2003. 
+# After 2003 the stock seemed never to remain constant. In 2009, one can observe that Microsoft endured a drop in its annual revenue. 
+# The drop occurred due to the global recession. However, after the recession, Microsoft was able to increase their profits. 
+# Furthermore, the time plot of daily returns suggests that it remained pretty consistent as the chart remains steady. 
+# Overall, based on the findings, it shows that Microsoft has continued to increase.
