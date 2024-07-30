@@ -1,0 +1,129 @@
+
+### Assignment 2
+
+### Alexa Guerra
+
+############Install AER Package ###############################
+install.packages("AER") # Install Package 
+
+############ Load the package #################################
+library(AER) # Load the Package
+
+####### Part (i)
+
+data() # view the data available options 
+
+data("HousePrices") # select the data for House Prices 
+
+head(HousePrices)  #Observes the first 6 rows 
+
+summary(HousePrices)  #provides a summary of statistics such as mean, median, max, and min
+
+######### PART (ii)
+names(HousePrices) #retrieves the names of the variables 
+
+dim(HousePrices)  #gets the dimensions number or rows and columns of the dataset
+
+attach(HousePrices)  #makes columns of the house prices dataset available for direct access without specifying the dataset name each time
+
+numrows=nrow(HousePrices)  #calculates and assigns the number of rows in the house prices dataset to the variable numrows 
+
+driveway_dummy<-matrix(nrow=numrows,ncol=1)  #creates an empty matrix named driveway_dummy with numrows rows and 1 column
+
+head(driveway_dummy)  #displays first few rows of the driveway_dummy matrix
+
+head(driveway)  #displays the first few of the driveway variables from the dataset and it should appear with the updated numbers 
+
+for (i in 1:numrows)
+    {
+
+ 	if (driveway[i]=='yes') {
+   	driveway_dummy[i,]=1
+	} else {
+  	driveway_dummy[i,]=0
+ 	}
+ } # for loop checks the values of the driveway variable in each row and assigns 1 to the corresponding row in the driveway_dummy matrix if the value is yes, and 0 if it is not yes. 
+ 
+ 
+head(driveway_dummy)  #shows first rows of the driveway_dummy matrix 
+
+mean(driveway_dummy)  #calculates and displays the mean of the driveway_dummy matrix
+
+colnames(driveway_dummy)="driveway_dummy" #sets the column name of the driveway_dummy matrix to driveway_dummy
+
+names(HousePrices)  #retrieves the names of the variables 
+
+dim(HousePrices)  #gets the dimensions number or rows and columns of the dataset
+
+numrows=nrow(HousePrices) #calculates and assigns the number of rows in the house prices dataset to the variable numrows 
+
+aircon_dummy<-matrix(nrow=numrows,ncol=1) #creates an empty matrix named aircon_dummy with numrows rows and 1 column
+
+head(aircon_dummy) #displays first few rows of the aircon_dummy matrix
+
+for (i in 1:numrows)
+    {
+
+ 	if (aircon[i]=='yes') {
+    	aircon_dummy[i,]=1
+ 	} else {
+    	aircon_dummy[i,]=0
+ 	}
+} #for loop checks the values of the driveway variable in each row and assigns 1 to the corresponding row in the aircon_dummy matrix if the value is yes, and 0 if it is not yes.
+
+head(aircon_dummy)  #displays first few rows of the aircon_dummy matrix
+
+mean(aircon_dummy)  #calculates and displays the mean of the aircon_dummy matrix 
+
+colnames(aircon_dummy)="aircon_dummy"  #sets the column name of the aircon_dummy matrix to driveway_dummy
+
+names(HousePrices)   # retrieves the names of the variables 
+
+dim(HousePrices).   #gets the dimensions number or rows and columns of the dataset
+
+numrows=nrow(HousePrices)  #calculates and assigns the number of rows in the house prices dataset to the variable numrows 
+
+gasheat_dummy<-matrix(nrow=numrows,ncol=1) #creates an empty matrix named gasheat_dummy with numrows rows and 1 column
+
+
+head(gasheat_dummy)   #displays first few rows of the gasheat_dummy matrix
+
+for (i in 1:numrows)
+     {
+ 
+ 	if (gasheat[i]=='yes') {
+    	gasheat_dummy[i,]=1
+ 	} else {
+    	gasheat_dummy[i,]=0
+ 	}
+ } #for loop checks the values of the driveway variable in each row and assigns 1 to the corresponding row in the gasheat_dummy matrix if the value is yes, and 0 if it is not yes. 
+
+head(gasheat_dummy) #displays first few rows of the gasheat_dummy matrix
+
+mean(gasheat_dummy) #calculates and displays the mean of the gasheat_dummy matrix 
+
+colnames(gasheat_dummy)="gasheat_dummy"  #sets the column name of the aircon_dummy matrix to gasheat_dummy
+
+summary(HousePrices) #provides a summary of statistics such as mean, median, max, and min now that dummy variables have been created 
+
+###### Part (iii)
+names(HousePrices)  #retrieves the names of the variables 
+
+attach(HousePrices)  #makes columns of the house prices dataset available for direct access without specifying the dataset name each time
+
+lm.fit1=lm(price~bedrooms) #shows hoe bedrooms effect house prices 
+
+summary(lm.fit1) #provides a summary of the regression model
+
+###### Part (iv)
+names(HousePrices)  #retrives names of variables 
+
+attach(HousePrices)  #makes columns of the house prices dataset available for direct access without specifying the dataset name each time
+
+lm.fit2=lm(price~lotsize+bedrooms+bathrooms+stories+driveway_dummy+recreation+fullbase+gasheat_dummy+aircon_dummy+garage+prefer)  #includes all parameters
+
+ summary(lm.fit2) # provides a  summary of the regression model
+
+
+
+
