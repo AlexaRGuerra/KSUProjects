@@ -1,0 +1,118 @@
+CREATE TABLE alumni (
+    alumniID        INT         NOT NULL,
+    fName           VARCHAR(20) NOT NULL,
+    lName           VARCHAR(20) NOT NULL,
+    email           VARCHAR(50),
+    phone           VARCHAR(10),
+    DOB             DATE,
+    gender          VARCHAR(1),
+    ethnicity       VARCHAR(1),
+    website         VARCHAR(100),
+    linkedIn_link   VARCHAR(100),
+    twitter_link    VARCHAR(100),
+    facebook_link   VARCHAR(100),
+    instagram_link  VARCHAR(100),
+    guestSpeakerYN  VARCHAR(1),
+    newsLetterYN    VARCHAR(1),
+    imageThumb      VARCHAR(200),
+    imageNormal     VARCHAR(200),
+    description     VARCHAR(500),
+    deceasedYN      VARCHAR(1),
+    deceasedDT      DATE,
+    deceasedNotes   VARCHAR(500),
+    CONSTRAINT PK_alumniID PRIMARY KEY CLUSTERED (alumniID)
+);
+CREATE TABLE address (
+    addressID   INTEGER NOT NULL,
+    alumniID    INTEGER NOT NULL,
+    address     VARCHAR(50),
+    city        VARCHAR(50),
+    state       VARCHAR(2),
+    zipCode     VARCHAR(10),
+    activeYN    VARCHAR(1),
+    primaryYN   VARCHAR(1),
+    CONSTRAINT PK_addressID PRIMARY KEY (addressID),
+    CONSTRAINT FK_alumniID FOREIGN KEY (alumniID) REFERENCES alumni(alumniID)
+);
+
+CREATE TABLE employment (
+    EID         INTEGER NOT NULL,
+    alumniID    INTEGER NOT NULL,
+    company     VARCHAR(50) NOT NULL,
+    city        VARCHAR(50),
+    state       VARCHAR(2),
+    zip         VARCHAR(10),
+    jobTitle    VARCHAR(20),
+    startDate   DATE,
+    endDate     DATE,
+    currentYN   VARCHAR(1),
+    notes       VARCHAR(100),
+    CONSTRAINT PK_EID PRIMARY KEY (EID),
+    CONSTRAINT FK_employment_alumniID FOREIGN KEY (alumniID) REFERENCES alumni(alumniID)
+);
+
+CREATE TABLE degree (
+    degreeID        INTEGER NOT NULL,
+    alumniID        INTEGER NOT NULL,
+    major           VARCHAR(50) NOT NULL,
+    minor           VARCHAR(50),
+    graduationDT    DATE,
+    university      VARCHAR(100),
+    city            VARCHAR(50),
+    state           VARCHAR(2),
+    CONSTRAINT PK_degreeID PRIMARY KEY (degreeID),
+    CONSTRAINT FK_degree_alumniID FOREIGN KEY (alumniID) REFERENCES alumni(alumniID)
+);
+
+CREATE TABLE skillset (
+    SID         INTEGER NOT NULL,
+    alumniID    INTEGER NOT NULL,
+    skill       VARCHAR(50) NOT NULL,
+    proficiency VARCHAR(10),
+    description VARCHAR(100),
+    CONSTRAINT PK_SID PRIMARY KEY (SID),
+    CONSTRAINT FK_skillset_alumniID FOREIGN KEY (alumniID) REFERENCES alumni(alumniID)
+);
+
+CREATE TABLE donations (
+    donationID  INTEGER NOT NULL,
+    alumniID    INTEGER NOT NULL,
+    donationAmt DECIMAL(9,2) NOT NULL,
+    donationDT  DATE NOT NULL,
+    reason      VARCHAR(200),
+    description VARCHAR(200),
+    CONSTRAINT PK_donationID PRIMARY KEY (donationID),
+    CONSTRAINT FK_donations_alumniID FOREIGN KEY (alumniID) REFERENCES alumni(alumniID)
+);
+
+CREATE TABLE newsLetter (
+    NID         INTEGER NOT NULL,
+    newsDate    DATE NOT NULL,
+    headline    VARCHAR(200),
+    description VARCHAR(200),
+    link        VARCHAR(200),
+    fileLoc     VARCHAR(200),
+    CONSTRAINT PK_NID PRIMARY KEY (NID)
+);
+
+CREATE TABLE sentTo (
+    alumniID    INTEGER NOT NULL,
+    NID         INTEGER NOT NULL,
+    sentDate    DATE,
+    CONSTRAINT PK_sentTo PRIMARY KEY (alumniID, NID),
+    CONSTRAINT FK_sentTo_alumniID FOREIGN KEY (alumniID) REFERENCES alumni(alumniID),
+    CONSTRAINT FK_sentTo_NID FOREIGN KEY (NID) REFERENCES newsLetter(NID)
+);
+
+CREATE TABLE user (
+    UID                 VARCHAR(20) NOT NULL,
+    password            VARCHAR(20) NOT NULL,
+    fName               VARCHAR(20) NOT NULL,
+    lName               VARCHAR(20) NOT NULL,
+    jobDescription      VARCHAR(50),
+    viewPriveledgeYN    VARCHAR(1),
+    insertPriveledgeYN  VARCHAR(1),
+    updatePriveledgeYN  VARCHAR(1),
+    deletePriveledgeYN  VARCHAR(1),
+    CONSTRAINT PK_UID PRIMARY KEY (UID)
+);
